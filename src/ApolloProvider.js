@@ -8,7 +8,7 @@ import {
 import { setContext } from '@apollo/client/link/context';
 
 const httpLink = createHttpLink({
-  uri: 'http://localhost:8080/graphql',
+  uri: 'http://localhost:8081/graphql',
 });
 
 const client = new ApolloClient({

@@ -71,33 +71,33 @@ function BookList(props) {
 function BookForm(props) {
     const [addNewBook, { loading, error }] = useMutation(ADD_NEW_BOOK, {
         refetchQueries: [{ query: GET_ALL_BOOKS }],
-      });
-      const [notification, setNotification] = useState(null);
-    
-      function handleSubmit(event) {
+    });
+    const [notification, setNotification] = useState(null);
+
+    function handleSubmit(event) {
         event.preventDefault();
-    
+
         const formData = new FormData(event.target);
         const book = Object.fromEntries(formData.entries());
-    
+
         // Validation
         if (!book.title || !book.author || !book.description) {
-          setNotification("Please provide all required fields.");
-          return;
+            setNotification("Please provide all required fields.");
+            return;
         }
-    
+
         addNewBook({ variables: { bookInput: book } })
-          .then(() => {
-            props.showList();
-            setNotification("Book added successfully.");
-            setTimeout(() => {
-              setNotification(null);
-            }, 3000);
-          })
-          .catch((err) => {
-            setNotification(`Error adding book: ${err.message}`);
-          });
-      }    
+            .then(() => {
+                props.showList();
+                setNotification("Book added successfully.");
+                setTimeout(() => {
+                    setNotification(null);
+                }, 3000);
+            })
+            .catch((err) => {
+                setNotification(`Error adding book: ${err.message}`);
+            });
+    }
 
     return (
         <>
@@ -105,6 +105,7 @@ function BookForm(props) {
 
             <div className="row">
                 <div className="col-lg-6 mx-auto">
+                    {notification && <div className="alert alert-info">{notification}</div>}
                     <form onSubmit={handleSubmit}>
                         <div className="row mb-3">
                             <label className="col-sm-4 col-form-label">Book Title</label>
